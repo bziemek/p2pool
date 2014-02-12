@@ -373,7 +373,7 @@ class WorkerBridge(worker_interface.WorkerBridge):
         merkle_link = bitcoin_data.calculate_merkle_link([None] + other_transaction_hashes, 0) if share_info.get('segwit_data', None) is None else share_info['segwit_data']['txid_merkle_link']
         
         print 'New work for worker %s! Difficulty: %.06f Share difficulty: %.06f (speed %.06f) Total block value: %.6f %s including %i transactions' % (
-            pubkey_hash,
+            bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT),
             bitcoin_data.target_to_difficulty(target),
             bitcoin_data.target_to_difficulty(share_info['bits'].target),
             local_addr_rates.get(pubkey_hash, 0),
