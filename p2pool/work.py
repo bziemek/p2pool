@@ -291,8 +291,9 @@ class WorkerBridge(worker_interface.WorkerBridge):
         
         if desired_share_target is None:
             desired_share_target = 2**256-1
-            local_hash_rate = self._estimate_local_hash_rate()
-            if local_hash_rate is not None:
+            local_addr_rates = self.get_local_addr_rates()
+            local_hash_rate = local_addr_rates.get(pubkey_hash, 0)
+            if local_hash_rate > 0.0:
                 desired_share_target = min(desired_share_target,
                     bitcoin_data.average_attempts_to_target(local_hash_rate * self.node.net.SHARE_PERIOD / 0.0167)) # limit to 1.67% of pool shares by modulating share difficulty
             
@@ -376,9 +377,11 @@ class WorkerBridge(worker_interface.WorkerBridge):
         else:
             current_time = time.time()
             if (current_time - print_throttle) > 5.0:
-                print 'New work! Diff: %.02f Share diff: %.02f Block value: %.2f %s (%i tx, %.0f kB)' % (
+                print 'New work for %s! Diff: %.02f Share diff: %.02f (speed %.06f) Block value: %.2f %s (%i tx, %.0f kB)' % (
+                    bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT),
                     bitcoin_data.target_to_difficulty(target),
                     bitcoin_data.target_to_difficulty(share_info['bits'].target),
+                    local_addr_rates.get(pubkey_hash, 0),
                     self.current_work.value['subsidy']*self.node.net.PARENT.SUBSIDY_DECIMAL, self.node.net.PARENT.SYMBOL,
                     len(self.current_work.value['transactions']),
                     sum(map(bitcoin_data.tx_type.packed_size, self.current_work.value['transactions']))/1000.,
