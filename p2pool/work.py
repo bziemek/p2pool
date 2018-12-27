@@ -372,14 +372,24 @@ class WorkerBridge(worker_interface.WorkerBridge):
         lp_count = self.new_work_event.times
         merkle_link = bitcoin_data.calculate_merkle_link([None] + other_transaction_hashes, 0) if share_info.get('segwit_data', None) is None else share_info['segwit_data']['txid_merkle_link']
         
-        print 'New work for worker %s! Difficulty: %.06f Share difficulty: %.06f (speed %.06f) Total block value: %.6f %s including %i transactions' % (
-            bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT),
-            bitcoin_data.target_to_difficulty(target),
-            bitcoin_data.target_to_difficulty(share_info['bits'].target),
-            self.get_local_addr_rates().get(pubkey_hash, 0),
-            self.current_work.value['subsidy']*1e-8, self.node.net.PARENT.SYMBOL,
-            len(self.current_work.value['transactions']),
-        )
+        if print_throttle is 0.0:
+            print_throttle = time.time()
+        else:
+            current_time = time.time()
+            if (current_time - print_throttle) > 5.0:
+                print 'New work for %s! Diff: %.02f Share diff: %.02f (speed %.06f) Block value: %.2f %s (%i tx, %.0f kB)' % (
+                    bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT),
+                    bitcoin_data.target_to_difficulty(target),
+                    bitcoin_data.target_to_difficulty(share_info['bits'].target),
+                    local_addr_rates.get(pubkey_hash, 0),
+                    self.current_work.value['subsidy']*1e-8, self.node.net.PARENT.SYMBOL,
+                    len(self.current_work.value['transactions']),
+                    sum(map(bitcoin_data.tx_type.packed_size, self.current_work.value['transactions']))/1000.,
+                )
+                print_throttle = time.time()
+
+        #need this for stats
+        self.last_work_shares.value[bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT)]=share_info['bits']
         
         ba = dict(
             version=max(self.current_work.value['version'], 0x20000000),
