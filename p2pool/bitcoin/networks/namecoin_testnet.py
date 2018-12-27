@@ -26,3 +26,4 @@ TX_EXPLORER_URL_PREFIX = 'http://testnet.explorer.dot-bit.org/tx/'
 SANE_TARGET_RANGE = (2**256//2**32 - 1, 2**256//2**32 - 1)
 DUMB_SCRYPT_DIFF = 1
 DUST_THRESHOLD = 1e8
+SUBSIDY_DECIMAL = 1e-8

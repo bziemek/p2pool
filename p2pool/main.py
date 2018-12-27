@@ -65,7 +65,7 @@ class keypool():
     def paytotal(self):
         self.payouttotal = 0.0
         for i in range(len(pubkeys.keys)):
-            self.payouttotal += node.get_current_txouts().get(bitcoin_data.pubkey_hash_to_script2(pubkeys.keys[i]), 0)*1e-8
+            self.payouttotal += node.get_current_txouts().get(bitcoin_data.pubkey_hash_to_script2(pubkeys.keys[i]), 0)*node.net.PARENT.SUBSIDY_DECIMAL
         return self.payouttotal
 
     def getpaytotal(self):
@@ -403,8 +403,8 @@ def main(args, net, datadir_path, merged_urls, worker_endpoint):
                         paytot = 0.0
                         for i in range(len(pubkeys.keys)):
                             curtot = node.get_current_txouts().get(bitcoin_data.pubkey_hash_to_script2(pubkeys.keys[i]), 0)
-                            paytot += curtot*1e-8
-                            paystr += "(%.4f)" % (curtot*1e-8,)
+                            paytot += curtot*net.PARENT.SUBSIDY_DECIMAL
+                            paystr += "(%.4f)" % (curtot*net.PARENT.SUBSIDY_DECIMAL,)
                         paystr += "=%.4f" % (paytot,)
                         this_str += '\n Shares: %i (%i orphan, %i dead) Stale rate: %s Efficiency: %s Current payout: %s %s' % (
                             shares, stale_orphan_shares, stale_doa_shares,

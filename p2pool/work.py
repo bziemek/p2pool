@@ -379,7 +379,7 @@ class WorkerBridge(worker_interface.WorkerBridge):
                 print 'New work! Diff: %.02f Share diff: %.02f Block value: %.2f %s (%i tx, %.0f kB)' % (
                     bitcoin_data.target_to_difficulty(target),
                     bitcoin_data.target_to_difficulty(share_info['bits'].target),
-                    self.current_work.value['subsidy']*1e-8, self.node.net.PARENT.SYMBOL,
+                    self.current_work.value['subsidy']*self.node.net.PARENT.SUBSIDY_DECIMAL, self.node.net.PARENT.SYMBOL,
                     len(self.current_work.value['transactions']),
                     sum(map(bitcoin_data.tx_type.packed_size, self.current_work.value['transactions']))/1000.,
                 )
