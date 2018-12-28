@@ -83,10 +83,10 @@ def get_web_root(wb, datadir_path, bitcoind_getinfo_var, stop_event=variable.Eve
     def get_patron_sendmany(total=None, trunc='0.01'):
         if total is None:
             return 'need total argument. go to patron_sendmany/<TOTAL>'
-        total = int(float(total)*1e8)
-        trunc = int(float(trunc)*1e8)
+        total = int(float(total)/node.net.PARENT.SUBSIDY_DECIMAL)
+        trunc = int(float(trunc)/node.net.PARENT.SUBSIDY_DECIMAL)
         return json.dumps(dict(
-            (bitcoin_data.script2_to_address(script, node.net.PARENT), value/1e8)
+            (bitcoin_data.script2_to_address(script, node.net.PARENT), value*node.net.PARENT.SUBSIDY_DECIMAL)
             for script, value in get_current_scaled_txouts(total, trunc).iteritems()
             if bitcoin_data.script2_to_address(script, node.net.PARENT) is not None
         ))
