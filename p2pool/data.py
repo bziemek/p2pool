@@ -462,8 +462,10 @@ class BaseShare(object):
 
         # check for excessive fees
         if self.share_data['previous_share_hash'] is not None and block_abs_height_func is not None:
+
             height = (block_abs_height_func(self.header['previous_block'])+1)
-            base_subsidy = self.net.PARENT.SUBSIDY_FUNC(height)
+            # FIXME: quick-n-dirty divide by 10 to avoid spewing warnings about LCC's unusual subsidy function
+            base_subsidy = self.net.PARENT.SUBSIDY_FUNC(height) / 10
             #print "height == %i, base_subsidy = %i, hash = %x" % (height, base_subsidy, self.header['previous_block'])
             fees = [feecache[x] for x in other_tx_hashes if x in feecache]
             missing = sum([1 for x in other_tx_hashes if not x in feecache])
@@ -471,7 +473,8 @@ class BaseShare(object):
             if missing == 0:
                 max_subsidy = sum(fees) + base_subsidy
                 details = "Max allowed = %i, requested subsidy = %i, share hash = %064x, miner = %s" % (max_subsidy, self.share_data['subsidy'], self.hash, bitcoin_data.script2_to_address(self.new_script, self.net.PARENT))
-                if self.share_data['subsidy'] > max_subsidy:
+                # FIXME: orphan shares cause height to resolve to 1 when it shouldn't, but this should be fixed some better way
+                if self.share_data['subsidy'] > max_subsidy and height > 1:
                     self.naughty = 1
                     # Raising an error would make running this code fork the network. Perhaps we can include this when we fork to share version 34.
                     # But probably not. This detection of naughty shares is still heuristic, and will sometimes fail to detect a naughty share
@@ -507,8 +510,8 @@ class BaseShare(object):
         type(self).gentx_size   = self.gentx_size # saving this share's gentx size as a class variable is an ugly hack, and you're welcome to hate me for doing it. But it works.
         type(self).gentx_weight = self.gentx_weight
 
-        if not self.naughty: print "Received good share: diff=%.2e hash=%064x miner=%s" % (self.net.PARENT.DUMB_SCRYPT_DIFF*float(bitcoin_data.target_to_difficulty(self.target)), self.hash, bitcoin_data.script2_to_address(self.new_script, self.net.PARENT))
-        else: print "Received naughty=%i share: diff=%.2e hash=%064x miner=%s" % (self.naughty, self.net.PARENT.DUMB_SCRYPT_DIFF*float(bitcoin_data.target_to_difficulty(self.target)), self.hash, bitcoin_data.script2_to_address(self.new_script, self.net.PARENT))
+        #if not self.naughty: print "Received good share: diff=%.2e hash=%064x miner=%s" % (self.net.PARENT.DUMB_SCRYPT_DIFF*float(bitcoin_data.target_to_difficulty(self.target)), self.hash, bitcoin_data.script2_to_address(self.new_script, self.net.PARENT))
+        if self.naughty: print "Received naughty=%i share: diff=%.2e hash=%064x miner=%s" % (self.naughty, self.net.PARENT.DUMB_SCRYPT_DIFF*float(bitcoin_data.target_to_difficulty(self.target)), self.hash, bitcoin_data.script2_to_address(self.new_script, self.net.PARENT))
         return gentx # only used by as_block
     
     def get_other_tx_hashes(self, tracker):
