@@ -10,6 +10,8 @@ SYMBOL = 'LCC'
 POW_FUNC = data.hash256
 BLOCK_PERIOD = 150 # s
 ADDRESS_VERSION = 28
+SEGWIT_ADDRESS_VERSION = 50
+HUMAN_READABLE_PART = 'lcc'
 
 CONF_FILE_FUNC = lambda: os.path.join(
 	os.path.join(os.environ['APPDATA'], 'LitecoinCash') if platform.system() == 'Windows' else

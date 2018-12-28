@@ -15,15 +15,15 @@ MAX_TARGET = 2**256//2**20 - 1
 
 VERSION_CHECK = lambda v: None if 150001 <= v else 'Litecoin Cash version too old. Upgrade to 0.15.0.1 or newer!'
 VERSION_WARNING = lambda v: None if 160002 <= v else 'Litecoin Cash version out of date. Upgrade to 0.16.0.2 or newer ASAP!'
-SOFTFORKS_REQUIRED = set(['bip65', 'csv', 'segwit'])
-MINIMUM_PROTOCOL_VERSION = 3301
-NEW_MINIMUM_PROTOCOL_VERSION = 3301
+SOFTFORKS_REQUIRED = set(['bip65', 'csv', 'segwit', 'hive'])
+MINIMUM_PROTOCOL_VERSION = 3302
+NEW_MINIMUM_PROTOCOL_VERSION = 3302
 SEGWIT_ACTIVATION_VERSION = 33
 BLOCK_MAX_SIZE = 4000000
 BLOCK_MAX_WEIGHT = 4000000
 
 BOOTSTRAP_ADDRS = []
-BOOTSTRAP_ADDRS = 'p2p-a.minelcc.net p2p-b.minelcc.net p2p-c.minelcc.net'.split(' ')
+BOOTSTRAP_ADDRS = 'p2p-us.minelcc.net p2p-eu.minelcc.net p2p-asia.minelcc.net'.split(' ')
 ANNOUNCE_CHANNEL = '#p2pool-lcc'
 
 IDENTIFIER = '110a463717b751fd'.decode('hex')
