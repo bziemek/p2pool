@@ -4,9 +4,11 @@ P2Pool for Litecoin Cash
 
 **Pull requests with more bootstrap nodes are highly encouraged!**
 
+### **UPGRADE PENDING: A protocol upgrade (from 3301 to 3302) will be deployed to p2p.minelcc.net on 2 Jan. 2019 at 17:00 GMT. Pool operators, please prepare to upgrade to avoid a sharechain split!**
+
 Features/patches included:
 
-* Segwit (P2SH & bech32) address support!
+* Segwit (P2SH & bech32) address support thanks to [spencerr @ VTC P2Pool](https://github.com/vertcoin-project/p2pool-vtc/commit/c3f9268d248cd0e99db551b6e5e8d9ac49fa2427)!
 * Rebased against https://github.com/jtoomim/p2pool (Dec. 27, 2018)
   * Includes Segwit and ASICBoost support!
   * Support for wallets without old `getinfo` command
