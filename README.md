@@ -1,3 +1,27 @@
+P2Pool for Litecoin Cash
+========================
+## https://p2p.minelcc.net/
+
+**Pull requests with more bootstrap nodes are highly encouraged!**
+
+Features/patches included:
+
+* Segwit (P2SH & bech32) address support!
+* Rebased against https://github.com/jtoomim/p2pool (Dec. 27, 2018)
+  * Includes Segwit and ASICBoost support!
+  * Support for wallets without old `getinfo` command
+* [Per-address difficulty calculations](https://github.com/p2pool/p2pool/pull/174)
+* Subsidy decimal shifting to support LCC (or other similar coins)
+
+BTC 19DEb3TtwAvZDtPkfypTk9xzsCXptJfxPk
+
+LTC Lc6sv9kuC2LeRL6WKtsvsWdxSxFKZDK8EF
+
+LCC CJVscCw3u8GGnp62z6hZwcZbnzKeEjVbJV
+
+Original Readme
+===============
+
 **P2pool installation with pypy -- Windows**
 
 
