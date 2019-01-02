@@ -4,7 +4,7 @@ P2Pool for Litecoin Cash
 
 **Pull requests with more bootstrap nodes are highly encouraged!**
 
-### **UPGRADE PENDING: A protocol upgrade (from 3301 to 3302) will be deployed to p2p.minelcc.net on 2 Jan. 2019 at 17:00 GMT. Pool operators, please prepare to upgrade to avoid a sharechain split!**
+### **UPGRADE POSTPONED: A protocol upgrade (from 3301 to 3302) has been delayed due to issues with the web handler undetected during testing. In the meantime, the branch [litecoin-cash-legacy](https://github.com/bziemek/p2pool-litecoincash/tree/litecoin-cash-legacy) is in production use at p2p.minelcc.net and contains several non-breaking features except Segwit address support. I am very sorry for any inconvenience this may have caused.**
 
 Features/patches included:
 
