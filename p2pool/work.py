@@ -385,7 +385,7 @@ class WorkerBridge(worker_interface.WorkerBridge):
                     bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT, pubkey_hash_version),
                     bitcoin_data.target_to_difficulty(target),
                     bitcoin_data.target_to_difficulty(share_info['bits'].target),
-                    local_addr_rates.get(pubkey_hash, 0),
+                    self.get_local_addr_rates().get(pubkey_hash, 0),
                     self.current_work.value['subsidy']*self.node.net.PARENT.SUBSIDY_DECIMAL, self.node.net.PARENT.SYMBOL,
                     len(self.current_work.value['transactions']),
                     sum(map(bitcoin_data.tx_type.packed_size, self.current_work.value['transactions']))/1000.,
