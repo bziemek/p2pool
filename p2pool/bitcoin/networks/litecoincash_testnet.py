@@ -32,8 +32,8 @@ TX_EXPLORER_URL_PREFIX = 'https://127.0.0.1/tx/'
 
 SUBSIDY_FUNC = lambda height: (
 	0 if height <= 101 or height >= 6215968 or height / 840000 >= 64 else
-	50*100000000*10 >> height//840000 if height-101 > 40 else
-	(height-100) * ((50*100000000*10)/40) >> height//840000
+	50*100000000 >> height//840000 if height-101 > 40 else
+	(height-100) * ((50*100000000)/40) >> height//840000
 )
 SUBSIDY_DECIMAL = 1e-7
 

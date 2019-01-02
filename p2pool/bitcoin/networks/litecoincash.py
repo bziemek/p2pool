@@ -34,8 +34,8 @@ TX_EXPLORER_URL_PREFIX = 'https://explorer.litecoinca.sh/tx/'
 
 SUBSIDY_FUNC = lambda height: (
 	0 if height <= 1371112 or height >= 6215968 or height / 840000 >= 64 else
-	50*100000000*10 >> height//840000 if height-1371112 > 2000 else
-	(height-1371111) * ((50*100000000*10)/2000) >> height//840000
+	50*100000000 >> height//840000 if height-1371112 > 2000 else
+	(height-1371111) * ((50*100000000)/2000) >> height//840000
 )
 SUBSIDY_DECIMAL = 1e-7
 

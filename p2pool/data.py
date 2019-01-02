@@ -464,8 +464,7 @@ class BaseShare(object):
         if self.share_data['previous_share_hash'] is not None and block_abs_height_func is not None:
 
             height = (block_abs_height_func(self.header['previous_block'])+1)
-            # FIXME: quick-n-dirty divide by 10 to avoid spewing warnings about LCC's unusual subsidy function
-            base_subsidy = self.net.PARENT.SUBSIDY_FUNC(height) / 10
+            base_subsidy = self.net.PARENT.SUBSIDY_FUNC(height)
             #print "height == %i, base_subsidy = %i, hash = %x" % (height, base_subsidy, self.header['previous_block'])
             fees = [feecache[x] for x in other_tx_hashes if x in feecache]
             missing = sum([1 for x in other_tx_hashes if not x in feecache])

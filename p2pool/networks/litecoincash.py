@@ -13,8 +13,8 @@ SPREAD = 7 # blocks
 MIN_TARGET = 0
 MAX_TARGET = 2**256//2**20 - 1
 
-VERSION_CHECK = lambda v: None if 150001 <= v else 'Litecoin Cash version too old. Upgrade to 0.15.0.1 or newer!'
-VERSION_WARNING = lambda v: None if 160002 <= v else 'Litecoin Cash version out of date. Upgrade to 0.16.0.2 or newer ASAP!'
+VERSION_CHECK = lambda v: None if 160002 <= v else 'Litecoin Cash version out of date. Upgrade to 0.16.0.2 or newer!'
+VERSION_WARNING = lambda v: None
 SOFTFORKS_REQUIRED = set(['bip65', 'csv', 'segwit', 'hive'])
 MINIMUM_PROTOCOL_VERSION = 3302
 NEW_MINIMUM_PROTOCOL_VERSION = 3302
